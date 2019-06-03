@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='css/style.css' type="text/css" rel='stylesheet'>
+    <title>Hjem-IS</title>
+</head>
+
+<body>
+
+    <div class="box">
+        <img class="logo" src="images/logo%20hjemis.png">
+        <a href="../klubben" class="logind">Log ind</a>
+        <img class="indkob" src="images/indkobskurv.png">
+    </div>
+    <div class="nav">
+        <label for="toggle">&#9776;</label>
+        <input type="checkbox" id="toggle" />
+        <div class="menu">
+            <div class="dropdown">
+                <a class="forside" href="index.html">FORSIDE</a>
+                <button class="dropbtn">WEBSHOP
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="iserne.html">Iserne</a>
+                    <a href="varmmad.html">Varm mad</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn">GAVEKORT og RABAT
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="gavekort.html">Gavekort</a>
+                    <a href="klubben.html">Klubben</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn">UNDERHOLDNING
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="borneleg.html">Børn</a>
+                    <a href="madbloggen.html">Madboggen</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn">OM OS
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="omos.html">Om Hjem-IS</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn">KONTAKT
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="sporgsmalogsvar.html">Spørgsmål og svar</a>
+                    <a href="kontakt.html">Kontakt</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Automatic slideshow with buttons-->
+
+    <div class="w3-content w3-section" style="max-width:100%">
+        <img class="mySlides" src="images/coverbillede%20med%20slogan.png">
+        <img class="mySlides" src="images/gratis%20sms%20fra%20isbilen.jpg">
+        <img class="mySlides" src="images/Hjem-IS-Erhverv_gavekort-banner_584x179px_1.jpg">
+        <img class="mySlides" src="images/gratis-bornebilet.jpg">
+    </div>
+
+    <!-- The dots/circles -->
+    <div style="">
+        <span class="dot" onclick="currentSlide(1)"></span>
+        <span class="dot" onclick="currentSlide(2)"></span>
+        <span class="dot" onclick="currentSlide(3)"></span>
+        <span class="dot" onclick="currentSlide(3)"></span>
+    </div>
+
+    <!--javascript til automatic slideshow-->
+    <script>
+        var myIndex = 0;
+        carousel();
+
+        function carousel() {
+            var i;
+            var x = document.getElementsByClassName("mySlides");
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+            }
+            myIndex++;
+            if (myIndex > x.length) {
+                myIndex = 1
+            }
+            x[myIndex - 1].style.display = "block";
+            setTimeout(carousel, 15000); // Change image every 15 seconds
+        }
+    </script>
+    <!-- cards -->
+
+    <div class="flexcontainer">
+
+        <div class="card">
+            <a href="iserne.html"><img src="images/card-iserne.PNG" alt="" width="353" height="290"></a>
+        </div>
+
+        <div class="card">
+            <a href="varmmad.html"><img src="images/card-varm-mad.PNG" alt="" width="353" height="290"></a>
+        </div>
+
+        <div class="card">
+            <a href="#"><img src="images/card-find-isbilen.PNG" alt="" width="353" height="290"></a>
+        </div>
+
+        <div class="card">
+            <a href="gavekort.html"><img src="images/card-gavekort.PNG" alt="" width="353" height="290"></a>
+        </div>
+
+        <div class="card">
+            <a href="klubben.html"><img src="images/card-klubben.PNG" alt="" width="353" height="290"></a>
+        </div>
+
+        <div class="card">
+            <a href="madbloggen.html"><img src="images/card-madbloggen.PNG" alt="" width="353" height="290"></a>
+        </div>
+
+        <div class="card">
+            <a href="borneleg.html"><img src="images/card-borneleg.PNG" alt="" width="353" height="290"></a>
+        </div>
+
+        <div class="card">
+            <a href="sporgsmalogsvar.html"><img src="images/card-sporgsmal-og-svar.PNG" alt="" width="353" height="290"></a>
+        </div>
+
+        <div class="card">
+            <a href="kontakt.html"><img src="images/card-kontakt.PNG" alt="" width="353" height="290"></a>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footrow">
+            <div class="footcol">ADRESSE: <br>Hjem-IS Danmark A/S<br>
+                Kokholm 1B, 1.<br>
+                6000 Kolding</div>
+
+            <div class="footcol">E-MAIL: <br>info@hjem-is.dk</div>
+
+            <div class="footcol">TLF: <br> +4576106100<br>
+                Mandag -Torsdag:<br>
+                8:00 - 15:30<br>
+                Fredag:<br>
+                8:00 - 14:00</div>
+
+
+            <div class="footcol">TILBUD OG SERVICE:<br> Tilmeld SMS Service<br>
+                Tilmeld<br>
+                Nyhedsbrev<br>
+                Tilbudsavis<br>
+                Levering</div>
+        </div>
+
+        <a href="https://www.facebook.com/hjemis/"><img class="fb" src="images/facebook%20icon.png"></a>
+
+        <a href="https://www.instagram.com/hjemisdk/?hl=da"><img class="instagram" src="images/instagram%20icon.png"></a>
+
+    </footer>
+
+
+</body>
+
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<!-- saved from url=(0053)https://cdn.leadfamly.com/campaign/iframe.htm?r=18031 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+		<script type="text/javascript">
+			function Proxy() {
+				this.useCookies = this.supportCookies() === true;
+				this.useLocalStorage = this.supportLocalStorage() === true;
+			}
+
+			Proxy.prototype.ready = function() {
+				try {
+					window.addEventListener('message', this.onMessage.bind(this), false);
+				}
+				catch (e) {
+					// console.log(e);
+				}
+
+				this.send('ready', {
+					cookies: this.getAllCookies()
+				});
+			};
+
+			Proxy.prototype.send = function(action, data) {
+				action = action || '';
+				data = data || {};
+
+				window.top.postMessage(
+					JSON.stringify({
+						'action': action,
+						'data': data,
+						'isLeadfamly': true
+					}),
+					'*'
+				);
+			};
+
+			Proxy.prototype.onMessage = function(event) {
+				if (event.type == 'message') {
+					var message = {};
+
+					try {
+						message = JSON.parse(event.data);
+					} catch (e) {
+						// console.log(e);
+					}
+
+					if (typeof message.isPopup !== 'undefined') {
+						var
+							action = message.action,
+							data = message.data;
+
+						switch (action) {
+							case 'method':
+								var response = this[data.name].apply(this, data.args);
+
+								this.send('response', {
+									'callback': data.callback,
+									'response': response
+								});
+								break;
+						}
+					}
+				}
+			};
+
+			Proxy.prototype.setStorage = function(id, key, value) {
+				var storage = this.getCookie('storage_db');
+
+				if (storage !== null) {
+					storage = JSON.parse(storage);
+				}
+				else {
+					storage = {};
+				}
+
+				if (typeof storage[id] === 'undefined') {
+					storage[id] = {};
+				}
+
+				storage[id][key] = value;
+
+				this.createCookie('storage_db', JSON.stringify(storage), 30, '/');
+			};
+
+			Proxy.prototype.createCookie = function(name, value, expires, path, domain) {
+				var cookie = name + "=" + escape(value) + ";";
+
+				if (expires) {
+					if(expires instanceof Date) {
+						if (isNaN(expires.getTime())) {
+							expires = new Date();
+						}
+					}
+					else {
+						expires = new Date(new Date().getTime() + parseInt(expires) * 1000 * 60 * 60 * 24);
+					}
+
+					cookie += 'expires=' + expires.toGMTString() + ';';
+				}
+
+				if (path) {
+					cookie += 'path=' + path + ';';
+				}
+
+				if (domain) {
+					cookie += 'domain=' + domain + ';';
+				}
+
+				document.cookie = cookie;
+
+				if (!this.useCookies && this.useLocalStorage) {
+					var cookie = {
+						value: value,
+						expires: (expires && expires instanceof Date ? expires.getTime() : -1),
+					};
+
+					var cookies = localStorage.getItem('cookies');
+
+					if (cookies !== null) {
+						cookies = JSON.parse(cookies);
+					}
+					else {
+						cookies = {};
+					}
+
+					cookies[name] = cookie;
+
+					localStorage.setItem('cookies', JSON.stringify(cookies))
+				}
+			};
+
+			Proxy.prototype.getAllCookies = function () {
+				if (this.useCookies) {
+					var
+						pairs = document.cookie.split(';'),
+						cookies = {};
+
+					for (var i = 0; i < pairs.length; i++){
+						var pair = pairs[i].split('=');
+						cookies[(pair[0] + '').trim()] = unescape(pair[1]);
+					}
+
+					return cookies;
+				}
+				else if (this.useLocalStorage) {
+					var cookies = localStorage.getItem('cookies');
+
+					if (cookies !== null) {
+						cookies = JSON.parse(cookies);
+					}
+					else {
+						cookies = {};
+					}
+
+					var cookies_to_return = {};
+
+					for (var cookie_item in cookies) {
+						if (cookies.hasOwnProperty(cookie_item)) {
+							if (new Date().getTime() <= cookies[cookie_item].expires) {
+								cookies_to_return[cookie_item] = cookies[cookie_item].value;
+							}
+						}
+					}
+
+					return cookies_to_return;
+				}
+				else {
+					return {};
+				}
+			};
+
+			Proxy.prototype.getCookie = function(name) {
+				if (this.useCookies) {
+					var re = new RegExp('[; ]' + name + '=([^\\s;]*)'),
+						sMatch = (' ' + document.cookie).match(re);
+
+					if (name && sMatch) {
+						return unescape(sMatch[1]);
+					}
+
+					return null;
+				}
+				else if (this.useLocalStorage) {
+					var cookies = localStorage.getItem('cookies');
+
+					if (cookies !== null) {
+						cookies = JSON.parse(cookies);
+					}
+					else {
+						cookies = {};
+					}
+
+					if (typeof cookies[name] !== 'undefined') {
+						if (new Date().getTime() <= cookies[name].expires) {
+							return cookies[name].value;
+						}
+					}
+				}
+
+				return null;
+			};
+
+			Proxy.prototype.deleteCookie = function(name) {
+				if (this.getCookie(name)) {
+					this.createCookie(name, '', -1, '/');
+				}
+			};
+
+			Proxy.prototype.supportCookies = function () {
+				this.createCookie('support_cookies', '1', 1, '/');
+
+				if (this.getCookie('support_cookies')) {
+					return true;
+				}
+
+				return false;
+			};
+
+			Proxy.prototype.supportLocalStorage = function () {
+				try {
+					localStorage.setItem('support_localstorage', 1);
+
+					if (localStorage.getItem('support_localstorage') == 1) {
+						return true;
+					}
+				}
+				catch(e) {
+					// console.log(e);
+				}
+
+				return false;
+			};
+
+			window.proxy = new Proxy();
+			window.proxy.ready();
+		</script>
+	</head>
+	<body>
+	
+
+</body></html>
